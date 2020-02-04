@@ -1,0 +1,17 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>cn.sunline.icore.dp</groupId>
+    <artifactId>dp-busi-parent</artifactId>
+    <version>3.1.0.0-SNAPSHOT</version>
+  </parent>
+  <groupId>cn.sunline.icore.dp</groupId>
+  <artifactId>dp-serv</artifactId>
+  <version>3.1.0.0-SNAPSHOT</version>
+  <name>Deposit Busi</name>
+  <description>存款业务</description>
+  <properties>
+    <ltts-module>true</ltts-module>
+    <access-rule>*;**/*</access-rule>
+  </properties>
+</project>

@@ -1,0 +1,1233 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<validateConfig stopOnLevel="error">
+    <registeredValidators>
+        <validator>cn.sunline.ltts.frw.model.validate.validator.ContextsValidator</validator>
+        <validator>cn.sunline.ltts.frw.model.validate.validator.GlobalUniqueValidator</validator>
+        <validator>cn.sunline.ltts.frw.model.validate.validator.ExpressionValidator</validator>
+        <validator>cn.sunline.ltts.frw.model.validate.validator.ModelRelationValidator</validator>
+        <validator>cn.sunline.ltts.frw.model.validate.validator.NameRelationValidator</validator>
+        <validator>cn.sunline.ltts.frw.model.validate.validator.RequiredValidator</validator>
+        <validator>cn.sunline.ltts.frw.model.validate.validator.IndexValidator</validator>
+        <validator>cn.sunline.ltts.frw.model.validate.validator.PatternValidator</validator>
+        <validator>cn.sunline.ltts.frw.model.validate.validator.ContextValidator</validator>
+        <validator>cn.sunline.ltts.frw.model.validate.validator.LocalUniqueValidator</validator>
+        <validator>cn.sunline.ltts.frw.model.validate.validator.EmptyValidator</validator>
+        <validator>cn.sunline.ltts.frw.model.validate.validator.MatchFileNameValidator</validator>
+        <validator>cn.sunline.ltts.frw.model.validate.validator.RefCollectValidator</validator>
+    </registeredValidators>
+    <targets>
+        <field clazz="cn.sunline.ltts.core.plugin.model.ExtensionConf" name="id">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.core.plugin.model.ExtensionConf" name="name">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.core.plugin.model.ExtensionConf" name="pointId">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+       <field clazz="cn.sunline.ltts.core.plugin.model.ExtensionConf" name="clazzImpl">
+            <validators>
+                <expression expression="@cn.sunline.ant.model.AntModelObjectPartner@loader.findJavaFile(clazzImpl) || @cn.sunline.ant.model.AntModelObjectPartner@loader.classFormName(clazzImpl)!=null" level="error" message="[%s,类不存在]">
+                    <test>clazzImpl!=null &amp;&amp; clazzImpl.trim().length()&gt;0</test>
+                </expression>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.core.plugin.model.ExtensionConf" name="pointObj">
+            <validators>
+                <modelRelation propertyName="pointId" level="error" message="[%s,不存在]">
+                    <test>pointId!=null &amp;&amp; pointId.trim().length()&gt;0</test>
+                </modelRelation>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.core.plugin.model.ExtensionPointConf" name="id">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.core.plugin.model.ExtensionPointConf" name="name">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.core.plugin.model.ExtensionPointConf" name="clazz">
+            <validators>
+                <expression expression="@cn.sunline.ant.model.AntModelObjectPartner@loader.findJavaFile(clazz) || @cn.sunline.ant.model.AntModelObjectPartner@loader.classFormName(clazz)!=null" level="error" message="[%s,接口不存在！]">
+                    <test>clazz!=null &amp;&amp; clazz.trim().length()&gt;0</test>
+                </expression>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.core.plugin.model.PluginConf" name="id">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <matchFileName level="error" message="id与文件名不匹配！"/>
+                <globalUnique level="error" message="校验失败,存在多个定义文件！[%s]"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.core.plugin.model.PluginConf" name="activator">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <expression expression="@cn.sunline.ant.model.AntModelObjectPartner@loader.findJavaFile(activator) || @cn.sunline.ant.model.AntModelObjectPartner@loader.classFormName(activator)!=null" level="error" message="[%s,对应的类不存在！]">
+                    <test>activator !=null &amp;&amp; activator.length()&gt;0</test>
+                </expression>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.core.plugin.model.PluginConf" name="displayName">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <!-- <field clazz="cn.sunline.ltts.frw.model.batch.BatchStepConf" name="id">
+            <validators>
+                <matchFileName level="error" message="属性值与文件名不匹配！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.batch.BatchStepConf" name="groupId">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.batch.BatchStepConf" name="transactionId">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.batch.BatchStepConf" name="groupObj">
+            <validators>
+                <modelRelation propertyName="groupId" level="error" message="[%s,不存在]">
+                    <test>groupId != null &amp;&amp; groupId.trim().length() !=0</test>
+                </modelRelation>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.batch.BatchStepConf" name="tranObj">
+            <validators>
+                <modelRelation propertyName="transactionId" level="error" message="[%s,不存在]">
+                    <test>transactionId !=null &amp;&amp; transactionId.trim().length()!=0</test>
+                </modelRelation>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.batch.BatchStepGroupConf" name="id">
+            <validators>
+                <matchFileName level="error" message="属性值与文件名不匹配！"/>
+            </validators>
+        </field> -->
+        <field clazz="cn.sunline.ltts.frw.model.batch.BatchTransactionConf" name="id">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <matchFileName level="error" message="属性值与文件名不匹配！"/>
+                <globalUnique level="error" message="校验失败"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.batch.BatchTransactionConf" name="longname">
+            <validators>
+                <required level="warn" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.batch.BatchTransactionConf" name="dataItemObj">
+            <validators>
+                <modelRelation propertyName="dataItem" level="error" message="[%s,不存在]">
+                    <test>dataItem != null</test>
+                </modelRelation>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.batch.BatchTransactionConf" name="jobDataItemObj">
+            <validators>
+                <modelRelation propertyName="jobDataItem" level="error" message="[%s,不存在]">
+                    <test>jobDataItem != null</test>
+                </modelRelation>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.batch.BatchTransactionConf" name="dataInterface">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.component.AbstractComponentInstance" name="id">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.component.AbstractComponentInstance" name="type">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.component.AbstractComponentInstance" name="typeObj">
+            <validators>
+                <modelRelation propertyName="type" level="error" message="[%s,不存在]">
+                    <test>type !=null</test>
+                </modelRelation>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.component.ComponentImplementation$Property" name="typeObj">
+            <validators>
+                <modelRelation propertyName="type" level="error" message="[%s,不存在]">
+                    <test>type!=null &amp;&amp; type.trim().length() !=0</test>
+                </modelRelation>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.component.ComponentImplementation" name="typeObj">
+            <validators>
+               <modelRelation propertyName="type" level="error" message="[%s,不存在]">
+                    <test>type!=null &amp;&amp; type.trim().length() !=0</test>
+                </modelRelation>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.component.ComponentInstanceConf" name="id">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.component.ComponentInstanceConf" name="longname">
+            <validators>
+                <required level="warn" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.component.ComponentInstanceConf" name="typeObj">
+            <validators>
+                <modelRelation propertyName="type" level="error" message="[%s,不存在]">
+                    <test>type!=null &amp;&amp; type.trim().length()!=0</test>
+                </modelRelation>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.component.ComponentInstanceConf" name="abstObj">
+            <validators>
+                <modelRelation propertyName="abst" level="error" message="[%s,不存在]">
+                    <test>abst!=null &amp;&amp; abst.trim().length()!=0</test>
+                </modelRelation>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.component.ComponentInstanceConf" name="implObj">
+            <validators>
+                <modelRelation propertyName="impl" level="error" message="[%s,不存在]">
+                    <test>impl!=null &amp;&amp; impl.trim().length()!=0</test>
+                </modelRelation>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.component.ComponentSchema" name="id">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <matchFileName level="error" message="属性值与文件名不匹配！"/>
+                <pattern pattern="^[a-zA-Z_$][a-zA-Z_$0-9]*$" level="error" message="[%s]不符合java命名规范(只能包含数字/字母/下划线，且不能以数字开头)"/>
+                <globalUnique level="error" message="校验失败,文件必须唯一"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.component.ComponentSchema" name="longname">
+            <validators>
+                <required level="warn" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.component.ComponentService" name="id">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.component.ComponentService" name="longname">
+            <validators>
+                <required level="warn" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.component.ComponentType" name="id">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.datainterface.DataInterfaceField" name="id">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <pattern pattern="^[a-z]{1}[a-z_A-Z0-9]*$" level="error" message="[%s]，字段首字母必须小写"/>
+                <localUnique level="error" message="[%s],字段必须局部唯一" valueSetExp="owner instanceof cn.sunline.ltts.frw.model.datainterface.DataInterfaceElements ? owner.elements.{id} : owner.fields.{id}">
+                         <test>id != null</test>
+                    </localUnique>
+                    	<!-- 注意和IDE配置保持一致，浙江农信默认采用输入和属性分开的校验 -->
+                <!-- <localUnique level="error" message="[%s],字段必须局部唯一（输入和属性区为一个局部区）" valueSetExp="owner instanceof cn.sunline.ltts.frw.model.datainterface.Output || owner instanceof cn.sunline.ltts.frw.model.datainterface.Printer? owner.elements.{id}:(owner instanceof cn.sunline.ltts.frw.model.datainterface.DataInterfaceFields ? owner.fields.{id}:owner.owner.inputAndProperty.elements.{id})">
+                    <test>id != null</test>
+                </localUnique> -->
+                  <expression expression="@cn.sunline.ant.model.AntModelObjectPartner@loader.getRefModelById(@cn.sunline.ltts.frw.model.dm.Element@class,ref).id == id" level="error" message="[%s],id必须与字典的ID一致">
+                    <test>ref !=null &amp;&amp; ref.trim().length()&gt;0 &amp;&amp; @cn.sunline.ant.model.AntModelObjectPartner@loader.getRefModelById(@cn.sunline.ltts.frw.model.dm.Element@class,ref)!=null</test>
+                </expression>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.datainterface.DataInterfaceField" name="longname">
+            <validators>
+                <required level="warn" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.datainterface.DataInterfaceField" name="alias">
+            <validators>
+                <localUnique valueSetExp="owner instanceof cn.sunline.ltts.frw.model.datainterface.DataInterfaceElements ? owner.elements.{alias} : owner.fields.{alias}" level="error" message="[s%],字段必须局部唯一">
+                    <test>alias != null</test>
+                </localUnique>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.datainterface.DataInterfaceField" name="typeObj">
+            <validators>
+                <modelRelation propertyName="type" level="error" message="[%s,不存在]">
+                    <test>(ref == null || ref.trim().length() == 0) &amp;&amp; (type != null &amp;&amp; type.trim().length() &gt;= 0)</test>
+                </modelRelation>
+            </validators>
+        </field>
+		<field clazz="cn.sunline.ltts.frw.model.datainterface.DataInterfaceField" name="ref">
+            <validators>
+                <expression expression="@cn.sunline.ant.model.AntModelObjectPartner@loader.getRefModelById(@cn.sunline.ltts.frw.model.dm.Element@class,ref)!=null" level="error" message="[%s],引用字典不存在">
+                    <test>ref !=null &amp;&amp; ref.trim().length()&gt;0 </test>
+                </expression>
+                <refCollect level="error" message="校验失败"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.datainterface.DataInterfaceField" name="type">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <expression expression="@cn.sunline.ant.model.AntModelObjectPartner@loader.getRefModelById(@cn.sunline.ltts.frw.model.dm.Element@class,ref).type == type" level="error" message="[%s],type必须与字典的type一致">
+                    <test>ref !=null &amp;&amp; ref.trim().length()&gt;0 &amp;&amp; @cn.sunline.ant.model.AntModelObjectPartner@loader.getRefModelById(@cn.sunline.ltts.frw.model.dm.Element@class,ref)!=null</test>
+                </expression>
+            </validators>
+        </field>
+        <!-- <field clazz="cn.sunline.ltts.frw.model.datainterface.DataInterfaceField" name="defaultValue">
+            <validators>
+               <expression expression="@cn.sunline.ant.model.ModelUtils@isValidDefaultValue(#root,defaultValue)" level="error" message="[%s],默认值不合法，与字段类型不匹配">
+                    <test>defaultValue !=null &amp;&amp; defaultValue.trim().length()&gt;0 </test>
+                </expression>
+            </validators>
+        </field> -->        
+        <!-- <field clazz="cn.sunline.ltts.frw.model.datainterface.DataInterfaceField" name="description">
+            <validators>
+                <required level="error" message="接口字段有默认值或固定值时，必须在描述中说明原因。 %s">
+                    <test>(null != fixedValue &amp;&amp; fixedValue.length()!=0) || (null != defaultValue &amp;&amp; defaultValue.length()!= 0)</test>
+                </required>
+            </validators>
+        </field> -->
+        <field
+               clazz="cn.sunline.ltts.frw.model.datainterface.DataInterfaceFields" name="id">
+               <validators>
+                    <required level="error" message="属性不能为空！"/>
+                    <!-- 浙江农信采用以下输入和属性分开校验的方式 -->
+                    <localUnique level="error" message="[%s],字段必须局部唯一" valueSetExp="owner instanceof cn.sunline.ltts.frw.model.datainterface.DataInterfaceElements ? owner.elements.{id} : owner.fields.{id}">
+                         <test>id != null</test>
+                    </localUnique>
+                    <!-- 平安银行采用以下输入和属性作为局部一起校验的方式 ，请客户化选择-->
+                     <!-- <localUnique level="error" message="[%s],字段必须局部唯一" valueSetExp="owner instanceof cn.sunline.ltts.frw.model.datainterface.Output || owner instanceof cn.sunline.ltts.frw.model.datainterface.Printer? owner.elements.{id}:(owner instanceof cn.sunline.ltts.frw.model.datainterface.DataInterfaceFields ? owner.fields.{id}:owner.owner.inputAndProperty.elements.{id})">
+                         <test>id != null</test>
+                    </localUnique> -->
+               </validators>
+          </field>
+        <field clazz="cn.sunline.ltts.frw.model.datainterface.DataInterfaceFields" name="longname">
+            <validators>
+                <required level="warn" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.datainterface.DataInterfaceFields" name="alias">
+            <validators>
+                <localUnique valueSetExp="owner instanceof cn.sunline.ltts.frw.model.datainterface.DataInterfaceElements ? owner.elements.{id} : owner.fields.{id}" level="error" message="[s%],字段必须局部唯一">
+                    <test>alias != null</test>
+                </localUnique>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.datainterface.DataMappingDetail" name="dest">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <nameRelation expression="@cn.sunline.ltts.frw.model.util.ObjectPathUtil@getFieldIdList(#mappingDest,getOwner(),&quot;dest&quot;)" flag="true" level="error" message="dest值[%s]不存在于集合中"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.datainterface.DataMappingDetail" name="src">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <nameRelation expression="@cn.sunline.ltts.frw.model.util.ObjectPathUtil@getFieldIdList(#mappingSrc,getOwner(),&quot;src&quot;)" flag="true" level="error" message="src值[%s]不存在于集合中">
+                    <test>mappingOnTop == null || mappingOnTop</test>
+                </nameRelation>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.db.DbIndex" name="id">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <localUnique valueSetExp="owner.index.{id}" level="error" message="[s%],字段必须局部唯一"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.db.DbIndex" name="type">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.db.DbIndex" name="fields">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <index level="error" message="[%s],索引配置不符合定义！" type="index">
+                    <test>fields !=null &amp;&amp; fields.length()!=0</test>
+                </index>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.db.DbSequence" name="id">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.db.Ddlfrag" name="sql">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.db.Field" name="id">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <localUnique valueSetExp="owner.fields.{id}" level="error" message="[s%],字段必须局部唯一"/>
+                <pattern pattern="^[a-z_$0-9]*$" level="error" message="[%s],表字段应全部小写"/>
+                <nameRelation expression="@cn.sunline.ltts.frw.model.util.ModelUtil@getParentFinalElement(owner).{id}" flag="false" level="error" message="字段[%s]不允许重载">
+                    <test>owner.extensionType !=null &amp;&amp; owner.extensionType.length !=0</test>
+                </nameRelation>
+                <expression expression="ref.endsWith(&quot;.&quot;+id)" level="error" message="[%s],id必须与字典的ID一致">
+	                    <test>ref !=null &amp;&amp; ref.trim().length()&gt;0</test>
+	            </expression>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.db.Field" name="longname">
+            <validators>
+                <required level="warn" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.db.Field" name="type">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.db.Field" name="typeObj">
+            <validators>
+                <modelRelation propertyName="type" level="error" message="[%s,不存在]">
+                    <test>(ref == null || ref.trim().length() == 0) &amp;&amp; (type != null &amp;&amp; type.trim().length() &gt;= 0)</test>
+                </modelRelation>
+            </validators>
+        </field>
+         <field clazz="cn.sunline.ltts.frw.model.db.Field" name="defaultValue">
+            <validators>
+               <expression expression="@cn.sunline.ant.model.ModelUtils@isValidDefaultValue(#root,defaultValue)" level="error" message="[%s],默认值不合法，与字段类型不匹配">
+                    <test>defaultValue !=null &amp;&amp; defaultValue.trim().length()&gt;0 </test>
+                </expression>
+            </validators>
+        </field>
+        <!-- <field clazz="cn.sunline.ltts.frw.model.db.Field" name="fraction">
+            <validators>
+                <expression expression="fraction &lt; length" level="error" message="[%s]小数位数超出允许范围"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.db.Field" name="indexName">
+            <validators>
+                 <empty level="error" message="[%s]在没有索引类型的情况下，不需要填写索引别名">
+                    <test>index == null || 'none' == index.toString()</test>
+                </empty>
+            </validators>
+        </field> -->
+        <field clazz="cn.sunline.ltts.frw.model.db.Field" name="ref">
+            <validators>
+                <expression expression="@cn.sunline.ant.model.AntModelObjectPartner@loader.getRefModelById(@cn.sunline.ltts.frw.model.dm.Element@class,ref)!=null" level="error" message="[%s],引用字典不存在">
+                    <test>ref !=null &amp;&amp; ref.trim().length()&gt;0 </test>
+                </expression>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.db.Field" name="type">
+            <validators>
+                <expression expression="@cn.sunline.ant.model.AntModelObjectPartner@loader.getRefModelById(@cn.sunline.ltts.frw.model.dm.Element@class,ref).type == type" level="error" message="[%s],type必须与字典的type一致">
+                    <test>ref !=null &amp;&amp; ref.trim().length()&gt;0 &amp;&amp; @cn.sunline.ant.model.AntModelObjectPartner@loader.getRefModelById(@cn.sunline.ltts.frw.model.dm.Element@class,ref)!=null</test>
+                </expression>
+            </validators>
+        </field> 
+		<!-- <field clazz="cn.sunline.ltts.frw.model.db.Field" name="refObj">
+            <validators>
+                <modelRelation level="error" message="[%s],引用字典不存在" propertyName="ref">
+                    <test>(ref != null &amp;&amp; ref.trim().length() != 0)</test>
+                </modelRelation>
+           </validators>
+        </field> -->
+        <field clazz="cn.sunline.ltts.frw.model.db.Table" name="id">
+            <validators>
+               <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+		<!-- <field clazz="cn.sunline.ltts.frw.model.db.Table" name="datasource">
+            <validators>
+               <expression
+                    expression="@cn.sunline.lttsclipse.base.model.lookup.WorkspaceModuleFacade@isMatchDataSource(#root)"
+                    level="error" message="数据源[%s]与父表不一致！">
+                    <test>datasource!=null &amp;&amp; datasource.trim().length()>0 &amp;&amp; extensionType!=null &amp;&amp;extensionType.length>0 </test>
+               </expression>
+            </validators>
+        </field> -->
+        <field clazz="cn.sunline.ltts.frw.model.db.Table" name="longname">
+            <validators>
+                <required level="warn" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.db.Table" name="name">
+            <validators>
+                <required level="error" message="[%s],表名不能为空！"/>
+                <globalUnique level="error" message="校验失败"/>
+            </validators>
+        </field>
+        <!--
+        <field clazz="cn.sunline.ltts.frw.model.db.Table" name="category">
+            <validators>
+                <required level="error" message="[%s],类别category不能为空！"/>
+            </validators>
+        </field>
+        -->
+        <field clazz="cn.sunline.ltts.frw.model.db.Table" name="fields">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.db.Table" name="extensionType">
+            <validators>
+                <modelRelation propertyName="extension" level="error" message="[%s,不存在]">
+                    <test>extension !=null</test>
+                </modelRelation>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.dm.Enumeration" name="id">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <pattern pattern="^[a-zA-Z_$][a-zA-Z_$0-9]*$" level="error" message="[%s]不符合java命名规范(只能包含数字/字母/下划线，且不能以数字开头)"/>
+                <localUnique valueSetExp="owner.enumerations.{id}" level="error" message="id 重复!">
+                    <test>owner instanceof cn.sunline.ltts.frw.model.dm.RestrictionType</test>
+                </localUnique>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.dm.Enumeration" name="value">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.dm.Enumeration" name="longname">
+            <validators>
+                <required level="warn" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.dm.OdbIndex" name="id">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <localUnique valueSetExp="owner.odbIndex.{id}" level="error" message="[s%],字段必须局部唯一"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.dm.OdbIndex" name="type">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+      <field clazz="cn.sunline.ltts.frw.model.dm.OdbIndex" name="fields">
+               <validators>
+                    <required level="error" message="属性不能为空！"/>
+                    <!-- <index level="error" message="[%s],索引置不符合定义！" type="odbindex">
+                         <test>fields !=null &amp;&amp; fields.length!=0 </test>
+                    </index> --> 
+                    <!--<expression
+                         expression="@cn.sunline.ant.model.ModelUtils@odbindexCheck(#root,fields) "
+                         level="error" message="[%s],须保证字段中至少有一个字段是表索引的字段">
+                         <test>fields !=null &amp;&amp; fields.length!=0</test>
+                    </expression> -->
+                    <!-- 新版校验方式，新旧都挪到客户化配置<expression
+                         expression="@cn.sunline.ant.model.ModelUtils@odbFirstFieldCheck(#root,fields,&quot;primary_error&quot;) "
+                         level="error" message="[%s],主键或者唯一索引，须保证字段中至少有一个字段是表索引中的任意首字段!">
+                         <test>fields !=null &amp;&amp; fields.length!=0</test>
+                    </expression>
+                    <expression
+                         expression="@cn.sunline.ant.model.ModelUtils@odbFirstFieldCheck(#root,fields,&quot;warn&quot;) "
+                         level="warn" message="[%s],odb普通索引中，字段不是表索引的首字段！">
+                         <test>fields !=null &amp;&amp; fields.length!=0</test>
+                    </expression>
+                    <expression
+                         expression="@cn.sunline.ant.model.ModelUtils@odbFirstFieldCheck(#root,fields,&quot;index_error&quot;) "
+                         level="error" message="[%s],普通索引，须保证字段中至少有一个字段是表索引的字段！">
+                         <test>fields !=null &amp;&amp; fields.length!=0</test>
+                    </expression> -->
+               </validators>
+          </field> 
+        <field clazz="cn.sunline.ltts.frw.model.dm.RestrictionType" name="id">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <localUnique valueSetExp="owner.types.{id}" level="error" message="[s%],字段必须局部唯一">
+                    <test> owner instanceof cn.sunline.ltts.frw.model.dm.Schema </test>
+                </localUnique>
+                <pattern pattern="^E_[A-Z0-9$][A-Z_$0-9]*$" level="error" message="[%s]，枚举类型定义时ID须以E_开头且全部大写">
+                    <!-- <test> null != enumerations &amp;&amp; enumerations.size() != 0 </test> -->
+                    <test>owner.getModelFile().getFileName().endsWith("e_schema.xml")</test>
+                </pattern>
+                <pattern pattern="^U_[A-Z0-9$][A-Z_$0-9]*$" level="error" message="[%s]，限制类型定义时ID须以U_开头且全部大写">
+                    <!-- <test> null == enumerations || enumerations.size()==0 </test> -->
+                    <test>owner.getModelFile().getFileName().endsWith("u_schema.xml")</test>
+                </pattern>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.dm.RestrictionType" name="longname">
+            <validators>
+                <required level="warn" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.dm.RestrictionType" name="baseType">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.dm.RestrictionType" name="baseTypeObj">
+            <validators>
+                <modelRelation propertyName="baseType" level="error" message="[%s,不存在]"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.dm.Schema" name="id">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <matchFileName level="error" message="属性值与文件名不匹配！"/>
+                <pattern pattern="^[a-zA-Z_$][a-zA-Z_$0-9]*$" level="error" message="[%s]不符合java命名规范(只能包含数字/字母/下划线，且不能以数字开头)"/>
+                <globalUnique level="error" message="校验失败"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.dm.Schema" name="longname">
+            <validators>
+                <required level="warn" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <!-- <field clazz="cn.sunline.ltts.frw.model.dm.Schema" name="classgen">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field> -->
+        <field clazz="cn.sunline.ltts.frw.model.dm.SubEnum" name="id">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <pattern pattern="^[a-zA-Z_$][a-zA-Z_$0-9]*$" level="error" message="[%s]不符合java命名规范(只能包含数字/字母/下划线，且不能以数字开头)"/>
+                <localUnique valueSetExp="owner.subenums.{id}" level="error" message="id 重复!">
+                    <test>owner instanceof cn.sunline.ltts.frw.model.dm.RestrictionType</test>
+                </localUnique>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.dm.SubEnum" name="longname">
+            <validators>
+                <required level="warn" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.dm.SubEnum" name="baseTypeObj">
+            <validators>
+                <modelRelation propertyName="baseType" level="error" message="[%s,不存在]">
+                    <test>baseType !=null &amp;&amp; baseType.trim().length()&gt;0 </test>
+                </modelRelation>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.dm.SubEnum" name="enums">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <expression expression="@cn.sunline.ltts.frw.model.util.ValidationUtil@contains(enums, owner.enumerations.{id})" level="error" message="[%s]子集包含不存在的值,请修正">
+                    <test>owner.class.simpleName.indexOf('RestrictionType') != -1</test>
+                </expression>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.dm.internal.DefaultComplexType" name="id">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <pattern pattern="^[a-zA-Z_$][a-zA-Z_$0-9]*$" level="error" message="[%s]不符合java命名规范(只能包含数字/字母/下划线，且不能以数字开头)"/>
+                <localUnique valueSetExp="owner.types.{id}" level="error" message="[s%],字段必须局部唯一"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.dm.internal.DefaultComplexType" name="longname">
+            <validators>
+                <required level="warn" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.dm.internal.DefaultComplexType" name="clazz">
+            <validators>
+                <expression expression="clazz eq 'default' || @cn.sunline.ltts.frw.model.util.ValidationUtil@isClassPath(clazz) " level="error" message="[%s]配置的类型错误">
+                	<test>clazz!=null &amp;&amp; clazz.trim().length()>0</test>
+                </expression>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.dm.internal.DefaultComplexType" name="extension">
+            <validators>
+                <required level="error" message="属性不能为空！">
+                    <test>introduct==true</test>
+                </required>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.dm.internal.DefaultComplexType" name="extensionType">
+            <validators>
+                <modelRelation propertyName="extension" level="error" message="[%s,不存在]"/>
+            </validators>
+        </field>
+        <!-- <field clazz="cn.sunline.ltts.frw.model.dm.internal.DefaultComplexType" name="elements">
+            <validators>
+                <expression expression="@cn.sunline.ltts.frw.model.util.ValidationUtil@isContainElementsByComplexType(elements.{id}, extensionType)" level="error" message="[%s]当前集合必须都在">
+                    <test>elements != null &amp;&amp; introduct &amp;&amp; extensionType != null</test>
+                </expression>
+            </validators>
+        </field> -->
+        <field clazz="cn.sunline.ltts.frw.model.dm.internal.DefaultElement" name="id">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <localUnique valueSetExp="owner.elements.{id}" level="error" message="[s%],字段必须局部唯一">
+                    <test> owner.getElements()!=null &amp;&amp; owner.elements.size() &gt;0 </test>
+                </localUnique>
+                <pattern pattern="^[a-z]{1}[a-z_A-Z0-9]*$" level="error" message="[%s]，字段首字母必须小写"/>
+                <expression expression="@cn.sunline.ant.model.AntModelObjectPartner@loader.getRefModelById(@cn.sunline.ltts.frw.model.dm.Element@class,ref).id == id" level="error" message="[%s],id必须与字典的ID一致">
+                    <test>ref !=null &amp;&amp; ref.trim().length()&gt;0 &amp;&amp; @cn.sunline.ant.model.AntModelObjectPartner@loader.getRefModelById(@cn.sunline.ltts.frw.model.dm.Element@class,ref)!=null</test>
+                </expression>
+                <!-- <nameRelation expression="@cn.sunline.ltts.frw.model.util.ModelUtil@getParentFinalElement(owner).{id}" flag="false" level="error" message="字段[%s]不允许重载">
+                    <test>owner.extensionType !=null &amp;&amp; owner.extensionType.length !=0</test>
+                </nameRelation> -->
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.dm.internal.DefaultElement" name="longname">
+            <validators>
+                <required level="warn" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.dm.internal.DefaultElement" name="property">
+            <validators>
+                <pattern pattern="^[a-zA-Z_$][a-zA-Z_.$0-9]*$" level="error" message="[%s]不符合java命名规范(只能包含数字/字母/下划线，且不能以数字开头)"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.dm.internal.DefaultElement" name="typeObj">
+            <validators>
+                <modelRelation propertyName="type" level="error" message="[%s,不存在]">
+                    <test>(ref == null || ref.trim().length() == 0) &amp;&amp; (type != null &amp;&amp; type.trim().length() &gt;= 0)</test>
+                </modelRelation>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.dm.internal.DefaultElement" name="ref">
+            <validators>
+                <expression expression="@cn.sunline.ant.model.AntModelObjectPartner@loader.getRefModelById(@cn.sunline.ltts.frw.model.dm.Element@class,ref)!=null" level="error" message="[%s],引用字典不存在">
+                    <test>ref !=null &amp;&amp; ref.trim().length()&gt;0</test>
+                </expression>
+                <refCollect level="error" message="校验失败"/>
+            </validators>
+        </field> 
+        <field clazz="cn.sunline.ltts.frw.model.dm.internal.DefaultElement" name="type">
+            <validators>
+                <expression expression="@cn.sunline.ant.model.AntModelObjectPartner@loader.getRefModelById(@cn.sunline.ltts.frw.model.dm.Element@class,ref).type == type" level="error" message="[%s],type必须与字典的type一致">
+                    <test>ref !=null &amp;&amp; ref.trim().length()&gt;0 &amp;&amp; @cn.sunline.ant.model.AntModelObjectPartner@loader.getRefModelById(@cn.sunline.ltts.frw.model.dm.Element@class,ref)!=null</test>
+                </expression>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.dm.internal.DefaultElement" name="defaultValue">
+            <validators>
+               <expression expression="@cn.sunline.ant.model.ModelUtils@isValidDefaultValue(#root,defaultValue)" level="error" message="[%s],默认值不合法，与字段类型不匹配">
+                    <test>defaultValue !=null &amp;&amp; defaultValue.trim().length()&gt;0 </test>
+                </expression>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.dm.internal.WebComponent" name="id">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <localUnique level="error" message="[s%],字段必须局部唯一"/>
+                <pattern pattern="^[a-zA-Z_$][a-zA-Z_$0-9]*$" level="error" message="[%s]不符合java命名规范(只能包含数字/字母/下划线，且不能以数字开头)"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.dm.internal.WebComponent" name="longname">
+            <validators>
+                <required level="warn" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.dm.internal.WebComponent" name="extensionType">
+            <validators>
+                <modelRelation propertyName="extension" level="error" message="[%s,不存在]">
+                    <test>extension!=null</test>
+                </modelRelation>
+            </validators>
+        </field>
+        <!-- <field clazz="cn.sunline.ltts.frw.model.report.ControlDetail" name="id">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <globalUnique level="error" message="校验失败"/>
+                <pattern pattern="^[a-zA-Z_$][a-zA-Z_$0-9]*$" level="error" message="校验失败"/>
+            </validators>
+        </field> -->
+        <field clazz="cn.sunline.ltts.frw.model.report.Report" name="id">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <globalUnique level="error" message="校验失败"/>
+                <matchFileName level="error" message="属性值与文件名不匹配！"/>
+                <pattern pattern="^[a-zA-Z_$][a-zA-Z_$0-9]*$" level="error" message="校验失败"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.report.Report" name="longname">
+            <validators>
+                <required level="warn" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.report.Report" name="dataItem">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.report.Report" name="dataItemObj">
+            <validators>
+                <modelRelation propertyName="dataItem" level="error" message="[%s,不存在]"/>
+            </validators>
+        </field>
+  		<field clazz="cn.sunline.ltts.frw.model.report.Report" name="assDataItemObj">
+            <validators>
+                 <modelRelation propertyName="assDataItem" level="error" message="[%s,不存在]">
+                    <test> assDataItem != null &amp;&amp; assDataItem.trim().length() &gt; 0 </test>
+                </modelRelation>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.sql.Delete" name="method">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.sql.DynamicDelete" name="dynamicSqls">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.sql.DynamicSelect" name="dynamicSqls">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.sql.DynamicUpdate" name="dynamicSqls">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.sql.Parameter" name="property">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <expression expression="@cn.sunline.ant.model.AntModelObjectPartner@loader.getRefModelById(@cn.sunline.ltts.frw.model.dm.Element@class,ref).id == property" level="error" message="[%s],id必须与字典的ID一致">
+                    <test>ref !=null &amp;&amp; ref.trim().length()&gt;0 &amp;&amp; @cn.sunline.ant.model.AntModelObjectPartner@loader.getRefModelById(@cn.sunline.ltts.frw.model.dm.Element@class,ref)!=null</test>
+                </expression>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.sql.Parameter" name="ref">
+            <validators>
+                <expression expression="@cn.sunline.ant.model.AntModelObjectPartner@loader.getRefModelById(@cn.sunline.ltts.frw.model.dm.Element@class,ref)!=null" level="error" message="[%s],引用字典不存在">
+                    <test>ref !=null &amp;&amp; ref.trim().length()&gt;0 </test>
+                </expression>
+                <refCollect level="error" message="校验失败"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.sql.Parameter" name="javaType">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <expression expression="@cn.sunline.ant.model.AntModelObjectPartner@loader.getRefModelById(@cn.sunline.ltts.frw.model.dm.Element@class,ref).type == javaType" level="error" message="[%s],type必须与字典的type一致">
+                    <test>ref !=null &amp;&amp; ref.trim().length()&gt;0 &amp;&amp; @cn.sunline.ant.model.AntModelObjectPartner@loader.getRefModelById(@cn.sunline.ltts.frw.model.dm.Element@class,ref)!=null</test>
+                </expression>
+                <refCollect level="error" message="校验失败"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.sql.Parameter" name="mode">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.sql.Parameter" name="javaTypeObj">
+            <validators>
+                <modelRelation propertyName="javaType" level="error" message="[%s,不存在]">
+                    <test> (ref == null || ref.trim().length() == 0) &amp;&amp; (javaType != null &amp;&amp; javaType.trim().length() &gt;= 0) </test>
+                </modelRelation>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.sql.ParameterMap" name="clazz">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.sql.ParameterMap" name="resultTypeObj">
+            <validators>
+                <modelRelation propertyName="clazz" level="error" message="[%s,不存在]">
+                    <test>clazz !=null &amp;&amp; !@cn.sunline.ltts.frw.model.util.ValidationUtil@validationJavaType(clazz, resultTypeObj)</test>
+                </modelRelation>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.sql.Result" name="javaType">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.sql.Result" name="javaTypeObj">
+            <validators>
+                <modelRelation propertyName="javaType" level="error" message="[%s,不存在]"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.sql.ResultMap" name="clazz">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.sql.ResultMap" name="resultTypeObj">
+            <validators>
+                <modelRelation propertyName="clazz" level="error" message="[%s,不存在]">
+                    <test>!@cn.sunline.ltts.frw.model.util.ValidationUtil@validationJavaType(clazz, resultTypeObj)</test>
+                </modelRelation>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.sql.Select" name="method">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.sql.Select" name="resultMap">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.sql.Sql" name="sql">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <sql level="error" message="[%s]未在参数中定义！">
+                    <test>sql!=null &amp;&amp; sql.length()&gt;0</test>
+               	</sql>
+	            <expression expression="!@cn.sunline.ant.model.CharUtil@isChinese(sql)" level="error" message="校验失败,sql语句存在中文字符！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.sql.SqlGroup" name="id">
+            <validators>
+                 <required level="pass" message="属性不能为空！">
+                    <test>owner==null</test>
+                </required>
+                <matchFileName level="error" message="属性值与文件名不匹配！">
+                	<test>owner==null</test>
+                </matchFileName>
+                <globalUnique level="error" message="校验失败">
+                	<test>owner==null</test>
+                </globalUnique>
+                <pattern pattern="^[a-zA-Z_$][a-zA-Z_$0-9]*$" level="error" message="[%s]不符合java命名规范(只能包含数字/字母/下划线，且不能以数字开头)">
+                	<test>owner==null</test>
+                </pattern>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.sql.SqlGroup" name="longname">
+            <validators>
+                <required level="warn" message="属性不能为空！">
+                    <test>owner == null</test>
+                </required>
+            </validators>
+        </field> 
+        <field clazz="cn.sunline.ltts.frw.model.sql.Statement" name="id">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <localUnique valueSetExp="owner.sqls.{id}" level="error" message="id值[%s]存在重复"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.sql.Statement" name="sqls">
+            <validators>
+                <required level="error" message="[%s]sql语句不能为空">
+                    <test>!(@cn.sunline.ltts.frw.model.sql.DynamicStatement@class.isAssignableFrom(getClass()))</test>
+                </required>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.sql.Statement" name="longname">
+            <validators>
+                <required level="warn" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.sql.Update" name="method">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.sql.dynamic.DynamicSqlSqlNode" name="logicSqlNodes">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.sql.dynamic.IfSqlNode" name="test">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.sql.dynamic.StrSqlNode" name="value">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <sql level="error" message="校验失败！[%s]未在参数中定义！"/>
+                <expression expression="!@cn.sunline.ant.model.CharUtil@isChinese(value)" level="error" message="校验失败,sql语句存在中文字符！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.tran.FlowTransactionConf" name="id">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <matchFileName level="error" message="属性值与文件名不匹配！"/>
+                <pattern pattern="^[a-zA-Z_$][a-zA-Z_$0-9]*$" level="warn" message="[%s]不符合java命名规范(只能包含数字/字母/下划线，且不能以数字开头)"/>
+                <globalUnique level="error" message="[%s] 交易必须唯一"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.tran.FlowTransactionConf" name="longname">
+            <validators>
+                <required level="warn" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.tran.FlowTransactionConf" name="kind">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.tran.FlowTransactionConf" name="dataInterface">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.tran.FlowTransactionConf" name="flow">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.tran.error.global.ErrorConf" name="id">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <localUnique valueSetExp="owner.errors.{id}" level="error" message="[s%],字段必须局部唯一"/>
+                <pattern pattern="^[a-zA-Z_$][a-zA-Z_$0-9]*$" level="error" message="[%s]不符合java命名规范(只能包含数字/字母/下划线，且不能以数字开头)"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.tran.error.global.ErrorConfs" name="id">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <localUnique valueSetExp="owner.errors.{id}" level="error" message="[s%],字段必须局部唯一"/>
+                <pattern pattern="^[a-zA-Z_$][a-zA-Z_$0-9]*$" level="error" message="[%s]不符合java命名规范(只能包含数字/字母/下划线，且不能以数字开头)"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.tran.error.global.ErrorParameter" name="id">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <localUnique valueSetExp="owner.parameters.{id}" level="error" message="[s%],字段必须局部唯一"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.tran.error.global.ErrorParameter" name="type">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.tran.error.global.ErrorParameter" name="typeObj">
+            <validators>
+                <modelRelation propertyName="type" level="error" message="[%s,不存在]"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.tran.error.global.GlobalErrorConf" name="id">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <globalUnique level="error" message="校验失败"/>
+                <pattern pattern="^[a-zA-Z_$][a-zA-Z_$0-9]*$" level="error" message="[%s]不符合java命名规范(只能包含数字/字母/下划线，且不能以数字开头)"/>
+                <matchFileName level="error" message="属性值与文件名不匹配！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.tran.flow.FlowExprNode" name="expr">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.tran.flow.FlowExprNode" name="mode">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.tran.flow.FlowLoopNode" name="mode">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.tran.flow.FlowMethodNode" name="method">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.tran.flow.FlowNode" name="id">
+            <validators>
+                <required level="warn" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.tran.flow.FlowReportNode" name="reportId">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+         <field clazz="cn.sunline.ltts.frw.model.tran.flow.FlowReportNode" name="reportObj">
+            <validators>
+                <modelRelation propertyName="reportId" level="error" message="[%s,不存在]"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.tran.flow.FlowReportNode" name="id">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <pattern pattern="^[a-zA-Z_$0-9]*$" level="error" message="[%s],报表节点id应符合java命名规范"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.tran.flow.FlowServiceNode" name="serviceName">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.tran.flow.FlowServiceNode" name="serviceObj">
+            <validators>
+                <modelRelation propertyName="serviceName" level="error" message="[%s,不存在]">
+                </modelRelation>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.tran.flow.FlowServiceNode" name="id">
+            <validators>
+                <pattern pattern="^[a-zA-Z_$0-9]*$" level="error" message="[%s],服务节点id应符合java命名规范"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.tran.flow.FlowTransactionNode" name="txnConf">
+          		<validators>
+          			<modelRelation level="error" message="[%s,不存在]" propertyName="name"/>
+          		</validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.crtran.flow.CRTransNode" name="cRConf">
+          		<validators>
+          			<modelRelation level="error" message="[%s,不存在]" propertyName="name"/>
+          		</validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.tran.service.Service" name="id">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <pattern pattern="^[a-zA-Z_$][a-zA-Z_$0-9]*$" level="error" message="[%s] 不符合java命名规范(只能包含数字/字母/下划线，且不能以数字开头)"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.tran.service.Service" name="name">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <pattern pattern="^[a-zA-Z_$][a-zA-Z_$0-9]*$" level="error" message="[%s] 不符合java命名规范(只能包含数字/字母/下划线，且不能以数字开头)"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.tran.service.Service" name="longname">
+            <validators>
+                <required level="warn" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.tran.service.ServiceImplementation" name="id">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <globalUnique level="error" message="校验失败"/>
+                <pattern pattern="^[a-zA-Z_$][a-zA-Z_$0-9]*$" level="warn" message="[%s]不符合java命名规范(只能包含数字/字母/下划线，且不能以数字开头)"/>
+                <matchFileName level="error" message="属性值与文件名不匹配！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.tran.service.ServiceImplementation" name="longname">
+            <validators>
+                <required level="warn" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.tran.service.ServiceImplementation" name="serviceType">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.tran.service.ServiceImplementation" name="serviceTypeObj">
+            <validators>
+                <modelRelation propertyName="serviceType" level="error" message="[%s,不存在]"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.tran.service.ServiceType" name="id">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <globalUnique level="error" message="校验失败"/>
+                <pattern pattern="^[a-zA-Z_$][a-zA-Z_$0-9]*$" level="warn" message="[%s]不符合java命名规范(只能包含数字/字母/下划线，且不能以数字开头)"/>
+                <matchFileName level="error" message="属性值与文件名不匹配！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.tran.service.ServiceType" name="longname">
+            <validators>
+                <required level="warn" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.tran.service.ServiceType" name="kind">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.web.WebAction" name="id">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <pattern pattern="^[a-zA-Z_$][a-zA-Z_$0-9]*$" level="error" message="校验失败"/>
+                <globalUnique level="error" message="校验失败"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.web.WebAction" name="longname">
+            <validators>
+                <required level="warn" message="属性不能为空！"/>
+            </validators>
+        </field> 
+        <field clazz="cn.sunline.ltts.frw.model.web.WebTransaction" name="id">
+            <validators>
+                <required level="error" message="属性不能为空！"/>
+                <matchFileName level="error" message="属性值与文件名不匹配！"/>
+                <pattern pattern="^[a-zA-Z_$][a-zA-Z_$0-9]*$" level="error" message="校验失败"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.web.WebTransaction" name="longname">
+            <validators>
+                <required level="warn" message="属性不能为空！"/>
+            </validators>
+        </field>
+        <field clazz="cn.sunline.ltts.frw.model.web.WebTransaction" name="extensionType">
+            <validators>
+                <modelRelation propertyName="extension" level="error" message="[%s,不存在]">
+                    <test>extension != null</test>
+                </modelRelation>
+            </validators>
+        </field>
+        
+        <field name="id" clazz="cn.sunline.ltts.frw.model.batch.file.FileBatchTransactionConf" >
+            <validators>
+                <matchFileName level="error" message="属性值与文件名不匹配！"/>
+                <globalUnique level="error" message="校验失败 [%s]重复定义!"/>
+                <matchFileName level="error" message="属性值与文件名不匹配！"/>
+            </validators>
+        </field>
+        <field name="longname" clazz="cn.sunline.ltts.frw.model.batch.file.FileBatchTransactionConf" >
+            <validators>
+                <required/>
+            </validators>
+        </field>
+        <field
+               clazz="cn.sunline.ltts.frw.model.batch.file.FileBatchTransactionConf" name="groupInfoObj">
+               <validators>
+                    <modelRelation level="error" message="[%s,不存在]" propertyName="groupInfo">
+                         <test>groupInfo != null</test>
+                    </modelRelation>
+               </validators>
+        </field>
+        <field name="id" clazz="cn.sunline.ltts.frw.model.batch.file.FileContent" >
+            <validators>
+                <required/>
+            </validators>
+        </field>
+         <field name="mappingObj" clazz="cn.sunline.ltts.frw.model.batch.file.FileContent" >
+            <validators>
+                <modelRelation propertyName="mapping" level="error" message="[%s,不存在]">
+                    <test><![CDATA[mapping != null && mapping.trim().length() >= 0]]></test>
+                </modelRelation>
+            </validators>
+        </field>
+         
+        <field name="typeObj" clazz="cn.sunline.ltts.frw.model.batch.file.FileField" >
+            <validators>
+                <modelRelation propertyName="type" level="error" message="[%s,不存在]">
+                    <test><![CDATA[(ref == null || ref.trim().length() == 0) && (type != null && type.trim().length() >= 0)]]></test>
+                </modelRelation>
+            </validators>
+        </field>
+        
+        <field name="id" clazz="cn.sunline.ltts.frw.model.batch.file.FileField" >
+            <validators>
+            	 <required/>
+                <expression message="[%s],id必须与字典的ID一致" expression="@cn.sunline.ant.model.AntModelObjectPartner@loader.getRefModelById(@cn.sunline.ltts.frw.model.dm.Element@class,ref).id == id">
+			   	   <test><![CDATA[ref !=null && ref.trim().length()>0 && @cn.sunline.ant.model.AntModelObjectPartner@loader.getRefModelById(@cn.sunline.ltts.frw.model.dm.Element@class,ref)!=null]]></test>
+				</expression>
+            </validators>
+        </field>
+        <field name="ref" clazz="cn.sunline.ltts.frw.model.batch.file.FileField">
+			<validators>
+			   <expression message="[%s],引用字典不存在" expression="@cn.sunline.ant.model.AntModelObjectPartner@loader.getRefModelById(@cn.sunline.ltts.frw.model.dm.Element@class,ref)!=null">
+			   		<test><![CDATA[ref !=null && ref.trim().length()>0 ]]></test>
+			   </expression>
+			</validators>
+		</field>
+		<field name="type" clazz="cn.sunline.ltts.frw.model.batch.file.FileField">
+			<validators>
+			   <required/>
+			   <expression message="[%s],type必须与字典的type一致" expression="@cn.sunline.ant.model.AntModelObjectPartner@loader.getRefModelById(@cn.sunline.ltts.frw.model.dm.Element@class,ref).type == type">
+			   		<test><![CDATA[ref !=null && ref.trim().length()>0 && @cn.sunline.ant.model.AntModelObjectPartner@loader.getRefModelById(@cn.sunline.ltts.frw.model.dm.Element@class,ref)!=null]]></test>
+			   </expression>
+			</validators>
+		</field>
+    </targets>
+</validateConfig>
